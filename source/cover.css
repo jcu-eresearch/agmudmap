@@ -35,69 +35,51 @@ body {
   text-shadow: 0 1px 3px rgba(0,0,0,.5);
 }
 
-/* Extra markup and styles for table-esque vertical and horizontal centering */
-.site-wrapper {
-  display: table;
-  width: 100%;
-  height: 100%; /* For at least Firefox */
-  min-height: 100%;
-  -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-          box-shadow: inset 0 0 100px rgba(0,0,0,.5);
-}
-.site-wrapper-inner {
-  display: table-cell;
-  vertical-align: top;
-}
-.cover-container {
-  margin-right: auto;
-  margin-left: auto;
-}
-
 /* Padding for spacing */
 .inner {
-  padding: 30px;
+  padding: 10px;
 }
 
 /*
  * Cover
  */
-
-.cover {
-  padding: 0 20px;
-  height: 250px;
-  background-image: url(header.jpg);
-  background-size: 100%;
-  text-align: center;
-  position: relative;
+.header {
+  background: #f22; /* IE8 proofing */
+  background: rgba(255,32,32,.5);
+  color: #000;
 }
-.cover .lead {
+.heading {
+  position: relative;
+  padding: 0;
+  color: #fff;
+}
+.lead {
   position: absolute;
   bottom: 0;
   width: 100%;
   margin: 0 0 10px 0;
-  font-size: 36px;
+  font-size: 30px;
   font-weight: bold;
   line-height: 1;
 }
 .intro {
   padding: 20px 0;
-  background: #f22; /* IE8 proofing */
-  background: rgba(255,32,32,.5);
-  color: #000;
 }
 .intro em {
   color: #fff;
 }
-
 
 /*
  * Footer
  */
 
 .mastfoot {
-  text-align: center;
   background: #fff; /* IE8 proofing */
   background: rgba(255,255,255,.7);
+}
+.mastfoot a:hover img {
+  background: #eee; /* IE8 proofing */
+  background: rgba(255,255,255,.6);
 }
 
 
@@ -117,8 +99,11 @@ body {
   }
 }
 
-@media (min-width: 992px) {
-  .cover-container {
-    width: 700px;
-  }
+/*
+ * Map
+ */
+#map {
+  width: 100%;
+  height: 1000px; /*calc using height = map.top - browser.height*/
+  background: #fff;
 }
