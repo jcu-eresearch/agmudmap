@@ -9,17 +9,18 @@
 
     <title>Mud Map: To the Sea of Prosperity, via north Australian expanded agriculture.</title>
 
+    <!-- Font -->
+    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
+
     <!-- Bootstrap core CSS -->
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link href="../bower_components/leaflet/dist/leaflet.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="cover.css" rel="stylesheet">
 
-    <!-- Leaflet -->
-    <link href="../bower_components/leaflet/dist/leaflet.css" rel="stylesheet">
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Condensed);
-    </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -63,6 +64,10 @@
             <a href="http://www.jcu.edu.au"><img src="jcu.png"></a>
             <a href="http://www.terrain.org.au"><img src="terrain.png"></a>
             <a href="http://www.grownorth.com.au"><img src="grownorth.png"></a>
+            <div class="promo">
+                Want something similar? Developed by the <a
+                href="http://eresearch.jcu.edu.au">JCU eResearch Centre</a>.
+            </div>
         </div>
     </div>
 
@@ -70,19 +75,56 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../bower_components/leaflet/dist/leaflet.js"></script>
+    <script src="data.geojson"></script>
     <script>
-    </script>
-    <script>
-        $('#map').height($(window).height() - $('#map').position().top);
-        var map = L.map('map', {attributionControl: false}).setView([51.505, -0.09], 13);
+        function resize() {
+            $('#map').height($(window).height() - $('#map').position().top);
+        }
+        $(window).resize(resize);
+        var map = L.map('map', {
+            attributionControl: false,
+            minZoom: 2,
+            maxZoom: 5,
+            crs: L.CRS.Simple,
+            center: [0, 0],
+            zoom: 3});
+        function unproject(point) {
+            return map.unproject(point, map.getMaxZoom());
+        }
+        var imageWidth = 3500,
+          imageHeight = 4928,
+          imageNorthEast = unproject([imageWidth, 0]),
+          imageSouthWest = unproject([0, imageHeight]),
+          maxNorthEast = unproject([imageWidth * 1.25, -imageHeight * 0.25]),
+          maxSouthWest = unproject([-imageWidth * 0.25, imageHeight * 1.5]);
+        map.setMaxBounds(new L.LatLngBounds(maxSouthWest, maxNorthEast));
+        L.imageOverlay('map.jpg', new L.LatLngBounds(imageSouthWest, imageNorthEast)).addTo(map);
 
-        // add an OpenStreetMap tile layer
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        // Adding point to map
+        function onEachFeature(feature, layer) {
+            var popupContent = feature.properties.description + " " + feature.properties.subtitle;
+            layer.bindPopup(popupContent);
+        }
+        L.geoJson(geojson, {
+            onEachFeature: onEachFeature,
+            pointToLayer: function(feature, latlng) {
+                var labelContent = "<h3>" + feature.properties.description + "</h3>";
+                if (feature.properties.subtitle) {
+                    labelContent += "<p>" + feature.properties.subtitle + "</p>";
+                }
+                console.log($(labelContent).style('max-width','200px').width());
+                return L.marker(unproject([latlng.lng, latlng.lat]), {
+                    icon: L.divIcon({
+                        className: 'leaflet-label ' + feature.properties.class,
+                        html: labelContent,
+                        iconSize: L.Point(200, 0)
+                        })
                 }).addTo(map);
+            }
+        }).addTo(map);
     </script>
   </body>
 </html>
