@@ -8,12 +8,11 @@ with open('../resources/data-points.csv', 'rb') as data_file:
 features = []
 for data in data_points:
     feature = Feature(geometry=Point((int(data['x']), int(data['y']))),
-                      properties={'description': data['description'],
-                                  'subtitle': data['subtitle'],
-                                  'class': data['class']})
+                      properties={key: data[key] for key in data
+                                  if key not in ('x', 'y')})
     features.append(feature)
 
-output = str(FeatureCollection(features))
+output = 'var geojson = %s;' % str(FeatureCollection(features))
 
 with open('data.geojson', 'wb') as geojson_file:
     geojson_file.write(output)

@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Keith Noble is a PhD candidate in the College of Marine and Environmental Sciences, James Cook University, Townsville Campus. His thesis title is Eyes wide open: Planning a resilient future for North Australian agriculture, come hell or high water.">
+    <meta name="author" content="Keith Noble">
 
     <title>Mud Map: To the Sea of Prosperity, via north Australian expanded agriculture.</title>
 
@@ -38,7 +38,7 @@
             </div>
             <div class="intro">
                 <div class="col-md-3">
-                    <p>Keith Noble is a PhD candidate in the Colleage of Marine and
+                    <p>Keith Noble is a PhD candidate in the College of Marine and
                         Environmental Sciences, James Cook University, Townsville
                         Campus.  His thesis title is <em>Eyes wide open: Planning a
                         resilient future for North Australian agriculture, come hell or high
@@ -81,16 +81,17 @@
     <script src="data.geojson"></script>
     <script>
         function resize() {
-            $('#map').height($(window).height() - $('#map').position().top);
+            $('#map').height($(window).height());
+            //$('#map').height($(window).height() - $('#map').position().top);
         }
         $(window).resize(resize);
         var map = L.map('map', {
             attributionControl: false,
-            minZoom: 2,
-            maxZoom: 5,
+            minZoom: 4,
+            maxZoom: 6,
             crs: L.CRS.Simple,
-            center: [0, 0],
-            zoom: 3});
+            center: [-31.3125, 28.65625], //Manual calc
+            zoom: 4});
         function unproject(point) {
             return map.unproject(point, map.getMaxZoom());
         }
@@ -105,7 +106,7 @@
 
         // Adding point to map
         function onEachFeature(feature, layer) {
-            var popupContent = feature.properties.description + " " + feature.properties.subtitle;
+            var popupContent = "<h3>" + feature.properties.description + "</h3>" + feature.properties.content;
             layer.bindPopup(popupContent);
         }
         L.geoJson(geojson, {
@@ -115,7 +116,6 @@
                 if (feature.properties.subtitle) {
                     labelContent += "<p>" + feature.properties.subtitle + "</p>";
                 }
-                console.log($(labelContent).style('max-width','200px').width());
                 return L.marker(unproject([latlng.lng, latlng.lat]), {
                     icon: L.divIcon({
                         className: 'leaflet-label ' + feature.properties.class,
