@@ -12,14 +12,11 @@
     <!-- Font -->
     <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Leaflet -->
-    <link href="../bower_components/leaflet/dist/leaflet.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- build:css styles.css -->
     <link href="styles.css" rel="stylesheet">
+    <!-- endbuild -->
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -73,61 +70,12 @@
         </div>
     </div>
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../bower_components/leaflet/dist/leaflet.js"></script>
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- build:js app.js -->
     <script src="data.js"></script>
-    <script>
-        function resize() {
-            $('#map').height($(window).height());
-            //$('#map').height($(window).height() - $('#map').position().top);
-        }
-        $(window).resize(resize);
-        var map = L.map('map', {
-            attributionControl: false,
-            minZoom: 3,
-            maxZoom: 6,
-            crs: L.CRS.Simple,
-            center: [-31.3125, 28.65625], //Manual calc
-            zoom: 4});
-        function unproject(point) {
-            return map.unproject(point, map.getMaxZoom());
-        }
-        var imageWidth = 3500,
-          imageHeight = 4928,
-          imageNorthEast = unproject([imageWidth, 0]),
-          imageSouthWest = unproject([0, imageHeight]),
-          maxNorthEast = unproject([imageWidth * 1.25, -imageHeight * 0.25]),
-          maxSouthWest = unproject([-imageWidth * 0.25, imageHeight * 1.5]);
-        map.setMaxBounds(new L.LatLngBounds(maxSouthWest, maxNorthEast));
-        L.imageOverlay('map.jpg', new L.LatLngBounds(imageSouthWest, imageNorthEast)).addTo(map);
-
-        // Adding point to map
-        function onEachFeature(feature, layer) {
-            var popupContent = "<h3>" + feature.properties.description + "</h3>" + feature.properties.content + '<a class="btn btn-primary active" role="button" href="mailto:keith.noble2@my.jcu.edu.au?subject=Mud Map: ' + feature.properties.description + '">What are your thoughts?</a>';
-            layer.bindPopup(popupContent);
-        }
-        L.geoJson(geojson, {
-            onEachFeature: onEachFeature,
-            pointToLayer: function(feature, latlng) {
-                var labelContent = "<h3>" + feature.properties.description + "</h3>";
-                if (feature.properties.subtitle) {
-                    labelContent += "<p>" + feature.properties.subtitle + "</p>";
-                }
-                return L.marker(unproject([latlng.lng, latlng.lat]), {
-                    icon: L.divIcon({
-                        className: 'leaflet-label ' + feature.properties.class,
-                        html: labelContent,
-                        iconSize: L.Point(200, 0)
-                        })
-                }).addTo(map);
-            }
-        }).addTo(map);
-    </script>
+    <script src="mudmap.js"></script>
+    <!-- endbuild -->
     <script>
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
     (i[r].q=i[r].q||[]).push(arguments)
