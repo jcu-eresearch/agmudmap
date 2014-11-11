@@ -12,6 +12,10 @@ module.exports = function(grunt) {
                 cwd: 'src/',
                 src: '**',
                 dest: 'build/'
+            },
+            mapimage: {
+                src: 'src/map.jpg',
+                dest: 'build/map.jpg'
             }
         },
         wiredep: {
@@ -27,10 +31,12 @@ module.exports = function(grunt) {
         },
         usemin: {
             html: 'build/index.html',
+            css: 'build/*.css',
             js: 'build/*.js',
             options: {
                 assetsDirs: ['build'],
                 patterns: {
+                    css: [],
                     js: [
                         [/(map\.png)/, 'Replacing reference to map.png']
                     ]
@@ -40,6 +46,11 @@ module.exports = function(grunt) {
         smushit: {
             images: {
                 src: 'build/*.{gif,png}'
+            }
+        },
+        filerev: {
+            source: {
+                src: 'build/*.{js,png,jpg}'
             }
         },
         watch: {
@@ -55,6 +66,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-smushit');
     grunt.loadNpmTasks('grunt-usemin');
+    grunt.loadNpmTasks('grunt-filerev');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -64,13 +76,15 @@ module.exports = function(grunt) {
     grunt.registerTask('default', [
         'clean',
         'jshint',
-        'copy',
+        'copy:source',
         'wiredep',
         'useminPrepare',
         'concat:generated',
         'cssmin:generated',
         'uglify:generated',
+        'smushit',
+        'filerev',
         'usemin',
-        'smushit'
+        'copy:mapimage'
     ]);
 };

@@ -1,1 +1,9 @@
 *.swp
+.tmp/
+bower_components/
+node_modules/
+build/
+bin/
+local/
+lib/
+include/
