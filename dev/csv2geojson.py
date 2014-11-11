@@ -14,7 +14,7 @@ for data in data_points:
 
 output = 'var geojson = %s;' % str(FeatureCollection(features))
 
-with open('data.geojson', 'wb') as geojson_file:
+with open('data.js', 'wb') as geojson_file:
     geojson_file.write(output)
 
 print("Wrote GeoJSON to the file.")

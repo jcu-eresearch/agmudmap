@@ -19,7 +19,7 @@
     <link href="../bower_components/leaflet/dist/leaflet.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="cover.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -47,9 +47,11 @@
                 <div class="col-md-3">
                     <p>Keith would like to talk to you about your thoughts and experience
                         with agriculture in the north of Australia, particularly if you are a
-                        farmer, grazier, or researcher.  Keith can be contacted at:
-                        <a href="mailto:keith.noble2@my.jcu.edu.au">keith.noble2@my.jcu.edu.au</a>
-                        or <a class="text-nowrap" href="tel:+61427189160">0427 189 160</a>.
+                        farmer, grazier, or researcher.  Keith can be contacted at:</p>
+                    <p>
+                        <a class="btn btn-danger" href="mailto:keith.noble2@my.jcu.edu.au">keith.noble2@my.jcu.edu.au</a>
+                        or <a class="btn btn-danger text-nowrap" href="tel:+61427189160">0427 189 160</a>
+                    </p>
                 </div>
             </div>
         </div>
@@ -78,7 +80,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="../bower_components/leaflet/dist/leaflet.js"></script>
-    <script src="data.geojson"></script>
+    <script src="data.js"></script>
     <script>
         function resize() {
             $('#map').height($(window).height());
@@ -87,7 +89,7 @@
         $(window).resize(resize);
         var map = L.map('map', {
             attributionControl: false,
-            minZoom: 4,
+            minZoom: 3,
             maxZoom: 6,
             crs: L.CRS.Simple,
             center: [-31.3125, 28.65625], //Manual calc
@@ -106,7 +108,7 @@
 
         // Adding point to map
         function onEachFeature(feature, layer) {
-            var popupContent = "<h3>" + feature.properties.description + "</h3>" + feature.properties.content;
+            var popupContent = "<h3>" + feature.properties.description + "</h3>" + feature.properties.content + '<a class="btn btn-primary active" role="button" href="mailto:keith.noble2@my.jcu.edu.au?subject=Mud Map: ' + feature.properties.description + '">What are your thoughts?</a>';
             layer.bindPopup(popupContent);
         }
         L.geoJson(geojson, {
@@ -125,6 +127,15 @@
                 }).addTo(map);
             }
         }).addTo(map);
+    </script>
+    <script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)
+},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-56626321-1', 'auto');
+ga('send', 'pageview');
     </script>
   </body>
 </html>
