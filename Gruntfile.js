@@ -14,24 +14,32 @@ module.exports = function(grunt) {
                 dest: 'build/'
             }
         },
+        wiredep: {
+            task: {
+                src: ['build/index.html']
+            }
+        },
         useminPrepare: {
-            html: 'src/index.html',
+            html: 'build/index.html',
             options: {
                 dest: 'build'
             }
         },
         usemin: {
-            html: 'build/index.html'
-        },
-        filerev: {
-            images: {
-                src: 'src/*.{jpg,png}',
-                dest: 'build'
+            html: 'build/index.html',
+            js: 'build/*.js',
+            options: {
+                assetsDirs: ['build'],
+                patterns: {
+                    js: [
+                        [/(map\.png)/, 'Replacing reference to map.png']
+                    ]
+                }
             }
         },
-        wiredep: {
-            task: {
-                src: ['build/index.html']
+        smushit: {
+            images: {
+                src: 'build/*.{gif,png}'
             }
         },
         watch: {
@@ -45,8 +53,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-smushit');
     grunt.loadNpmTasks('grunt-usemin');
-    grunt.loadNpmTasks('grunt-filerev');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -57,12 +65,12 @@ module.exports = function(grunt) {
         'clean',
         'jshint',
         'copy',
+        'wiredep',
         'useminPrepare',
         'concat:generated',
         'cssmin:generated',
         'uglify:generated',
-        'filerev',
-        'wiredep',
-        'usemin'
+        'usemin',
+        'smushit'
     ]);
 };
