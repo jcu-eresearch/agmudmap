@@ -1,7 +1,7 @@
 {
   "name": "mudmap",
   "version": "0.1.0",
-  "description": "Quick one page project",
+  "description": "Mudmap for agricultural thesis",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,12 @@
     "type": "git",
     "url": "https://github.com/jcu-eresearch/app-configuration.git"
   },
-  "author": "davidjb",
+  "author": "David Beitey",
   "license": "GPL",
   "bugs": {
     "url": "https://github.com/jcu-eresearch/app-configuration/issues"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10"
   }
 }
