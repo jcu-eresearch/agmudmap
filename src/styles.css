@@ -26,7 +26,7 @@ body {
  * Heading
  */
 .header {
-    background: #f22; /* IE8 proofing */
+    background: #f22;
     background: rgba(255,32,32,.5);
     color: #000;
 }
@@ -100,8 +100,6 @@ body {
 /* Fixes for absolute nested elements that need a width... */
 .leaflet-marker-icon {
     width: 200px\0;
-    width: -moz-max-content;
-    width: -webkit-max-content;
     width: max-content;
 }
 .leaflet-label.leaflet-label-highlight {
@@ -127,7 +125,7 @@ body {
     background: #333;
 }
 .leaflet-label {
-    background: rgb(33, 33, 33);
+    background: #222;
     background: rgba(0, 0, 0, 0.45);
     background-clip: padding-box;
     border-color: #777;

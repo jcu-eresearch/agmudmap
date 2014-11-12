@@ -14,13 +14,23 @@ module.exports = function(grunt) {
                 dest: 'build/'
             },
             mapimage: {
-                src: 'src/map.jpg',
-                dest: 'build/map.jpg'
+                src: 'src/images/map.jpg',
+                dest: 'build/images/map.jpg'
             }
         },
         wiredep: {
             task: {
                 src: ['build/index.html']
+            }
+        },
+        bower: {
+            target: {
+                rjsConfig: 'build/scripts/main.js'
+            }
+        },
+        autoprefixer: {
+            source: {
+                src: 'build/*.css'
             }
         },
         useminPrepare: {
@@ -50,12 +60,12 @@ module.exports = function(grunt) {
         },
         filerev: {
             source: {
-                src: 'build/*.{js,png,jpg}'
+                src: 'build/*.{js,png,jpg,css}'
             }
         },
         watch: {
             all: {
-                files: ['src/*'],
+                files: ['src/**'],
                 tasks: ['default']
             }
         }
@@ -67,21 +77,25 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-smushit');
     grunt.loadNpmTasks('grunt-usemin');
     grunt.loadNpmTasks('grunt-filerev');
+    grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-wiredep');
+    grunt.loadNpmTasks('grunt-bower-requirejs');
 
     grunt.registerTask('default', [
         'clean',
         'jshint',
         'copy:source',
         'wiredep',
+        'bower',
+        'autoprefixer',
         'useminPrepare',
         'concat:generated',
         'cssmin:generated',
-        'uglify:generated',
+        //'uglify:generated',
         'smushit',
         'filerev',
         'usemin',
