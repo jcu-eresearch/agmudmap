@@ -55,8 +55,8 @@ module.exports = function(grunt) {
             }
         },
         filerev: {
-            source: {
-                src: 'build/**/*.{png,jpg,css}'
+            images: {
+                src: 'build/**/*.{js,png,jpg,css}'
             }
         },
         // Requirejs and usemin end up pointing at the 'same' location
@@ -108,9 +108,9 @@ module.exports = function(grunt) {
         'cssmin:generated',
         //'uglify:generated',
         'smushit',
+        'requirejs',
         'filerev',
         'usemin',
-        'requirejs',
         'copy:mapimage'
     ]);
     grunt.registerTask('dev', [
