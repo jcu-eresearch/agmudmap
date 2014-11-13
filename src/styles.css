@@ -78,25 +78,7 @@ body {
     background: #aaa\9;
 }
 
-/*
- * Affix and center
- */
-@media (min-width: 768px) {
-  .mastfoot {
-    position: fixed;
-    bottom: 0;
-    z-index: 999;
-  }
-  /* Handle the widths */
-  .mastfoot,
-  .cover-container {
-    width: 100%; /* Must be percentage or pixels for horizontal alignment */
-  }
-}
-
-/*
- * Map
- */
+/* Map */
 /* Fixes for absolute nested elements that need a width... */
 .leaflet-marker-icon {
     width: 200px\0;
@@ -143,3 +125,45 @@ body {
     font-weight: bold;
     margin: 6px 0;
 }
+
+@media (max-width: 320px) {
+    .heading img {
+        max-height: 100px;
+    }
+    .lead {
+        font-size: 16px;
+    }
+    .intro {
+        padding: 4px 0;
+        font-size: 11px;
+    }
+    .btn {
+        font-size: 12px;
+        padding: 2px;
+    }
+    .leaflet-popup-content h3,
+    .leaflet-label h3 {
+        font-size: 12px;
+    }
+    .leaflet-popup-content-wrapper {
+        max-width: 290px;
+        overflow: scroll;
+    }
+    .leaflet-popup-content {
+        font-size: 0.8em;
+    }
+
+}
+@media (min-width: 768px) {
+  .mastfoot {
+    position: fixed;
+    bottom: 0;
+    z-index: 999;
+  }
+  /* Handle the widths */
+  .mastfoot,
+  .cover-container {
+    width: 100%; /* Must be percentage or pixels for horizontal alignment */
+  }
+}
+

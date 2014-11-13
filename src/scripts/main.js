@@ -9,6 +9,7 @@ require(['jquery'], function(jQuery) {
         //$('#map').height($(window).height() - $('#map').position().top);
     }
     jQuery(window).resize(resize);
+    jQuery('#close-intro').click(function() { jQuery('.intro').hide(); });
 });
 
 require(['leaflet', './data'], function(L, geojson) {
