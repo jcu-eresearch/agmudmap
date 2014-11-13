@@ -1,9 +1,5 @@
+/*jslint browser: true */
 require.config({
-    shim: {
-        'bootstrap': {
-            deps: ['jquery']
-        }
-    }
 
 });
 
@@ -56,5 +52,4 @@ require(['leaflet', './data'], function(L, geojson) {
             }).addTo(map);
         }
     }).addTo(map);
-
 });

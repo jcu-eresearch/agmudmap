@@ -42,25 +42,32 @@ module.exports = function(grunt) {
         usemin: {
             html: 'build/index.html',
             css: 'build/*.css',
-            js: 'build/*.js',
             options: {
                 assetsDirs: ['build'],
                 patterns: {
                     css: [],
-                    js: [
-                        [/(map\.png)/, 'Replacing reference to map.png']
-                    ]
                 }
             }
         },
         smushit: {
             images: {
-                src: 'build/*.{gif,png}'
+                src: 'build/**/*.{gif,png}'
             }
         },
         filerev: {
             source: {
-                src: 'build/*.{js,png,jpg,css}'
+                src: 'build/**/*.{png,jpg,css}'
+            }
+        },
+        // Requirejs and usemin end up pointing at the 'same' location
+        requirejs: {
+            compile: {
+                options: {
+                    mainConfigFile: 'build/scripts/main.js',
+                    name: 'almond',
+                    include: ['main'],
+                    out: 'build/scripts/app.js'
+                }
             }
         },
         watch: {
@@ -73,6 +80,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-smushit');
     grunt.loadNpmTasks('grunt-usemin');
@@ -81,9 +89,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    // Auto load Bower dependencies into HTML
     grunt.loadNpmTasks('grunt-wiredep');
+    // Auto-populate require.js config
     grunt.loadNpmTasks('grunt-bower-requirejs');
+    // r.js optimisation
+    grunt.loadNpmTasks('grunt-contrib-requirejs');
 
     grunt.registerTask('default', [
         'clean',
@@ -99,6 +110,15 @@ module.exports = function(grunt) {
         'smushit',
         'filerev',
         'usemin',
+        'requirejs',
         'copy:mapimage'
+    ]);
+    grunt.registerTask('dev', [
+        'clean',
+        'jshint',
+        'copy:source',
+        'wiredep',
+        'bower',
+        'autoprefixer'
     ]);
 };
