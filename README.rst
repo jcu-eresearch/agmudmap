@@ -38,7 +38,6 @@ Just copy the static files onto the main webserver::
 Todo
 ====
 
-* browserify
-* Tidy up JS code for customisation and requirejs
+* Investigate browserify
 
 
