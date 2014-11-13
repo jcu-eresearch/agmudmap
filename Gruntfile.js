@@ -74,6 +74,10 @@ module.exports = function(grunt) {
             all: {
                 files: ['src/**'],
                 tasks: ['default']
+            },
+            dev: {
+                files: ['src/**'],
+                tasks: ['dev']
             }
         }
     });
