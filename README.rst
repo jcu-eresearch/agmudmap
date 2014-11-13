@@ -33,7 +33,7 @@ Production
 
 Just copy the static files onto the main webserver::
 
-   scp -r build/* www.hpc.jcu.edu.au:/opt/agmudmap.org
+   scp -r build/* www.example.org:/srv/agmudmap.org
 
 Todo
 ====
