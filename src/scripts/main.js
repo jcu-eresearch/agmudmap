@@ -18,13 +18,13 @@ require(['leaflet', './data'], function(L, geojson) {
         minZoom: 3,
         maxZoom: 6,
         crs: L.CRS.Simple,
-        center: [-31.3125, 28.65625], //Manual calc
+        center: [-31.3125, 28.65625], //Manual calc as we don't have a map yet
         zoom: 4});
     function unproject(point) {
         return map.unproject(point, map.getMaxZoom());
     }
     var imageWidth = 3500,
-        imageHeight = 4928,
+        imageHeight = 4928, // 2x scaling to save on image size
         imageNorthEast = unproject([imageWidth, 0]),
         imageSouthWest = unproject([0, imageHeight]),
         maxNorthEast = unproject([imageWidth * 1.25, -imageHeight * 0.25]),
